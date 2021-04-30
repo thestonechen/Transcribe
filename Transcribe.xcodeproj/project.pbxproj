@@ -16,6 +16,7 @@
 		66BB7EFF2639BE1B000794BC /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB7EFE2639BE1B000794BC /* HomeView.swift */; };
 		66BB7F032639C3C8000794BC /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB7F022639C3C8000794BC /* Notes.swift */; };
 		66BB7F08263AF8BF000794BC /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB7F07263AF8BE000794BC /* LoadingIndicator.swift */; };
+		66BB7F0C263C954B000794BC /* NoteCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB7F0B263C954B000794BC /* NoteCreationView.swift */; };
 		957D4F4CE62A8E270958EF7D /* Pods_Transcribe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE42E9E165F941C46227977 /* Pods_Transcribe.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		66BB7EFE2639BE1B000794BC /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		66BB7F022639C3C8000794BC /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		66BB7F07263AF8BE000794BC /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		66BB7F0B263C954B000794BC /* NoteCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCreationView.swift; sourceTree = "<group>"; };
 		D513AA07B06610B826B4DA71 /* Pods-Transcribe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transcribe.release.xcconfig"; path = "Target Support Files/Pods-Transcribe/Pods-Transcribe.release.xcconfig"; sourceTree = "<group>"; };
 		FFE42E9E165F941C46227977 /* Pods_Transcribe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Transcribe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -81,6 +83,7 @@
 				668A10F82639A4EE00F54ED0 /* TranscribeApp.swift */,
 				668A10FA2639A4EE00F54ED0 /* ContentView.swift */,
 				66BB7EFE2639BE1B000794BC /* HomeView.swift */,
+				66BB7F0B263C954B000794BC /* NoteCreationView.swift */,
 				66BB7F022639C3C8000794BC /* Notes.swift */,
 				66BB7F07263AF8BE000794BC /* LoadingIndicator.swift */,
 				668A10FC2639A4F200F54ED0 /* Assets.xcassets */,
@@ -222,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66BB7F0C263C954B000794BC /* NoteCreationView.swift in Sources */,
 				66BB7F08263AF8BF000794BC /* LoadingIndicator.swift in Sources */,
 				66BB7F032639C3C8000794BC /* Notes.swift in Sources */,
 				66BB7EBA2639B6BF000794BC /* AppDelegate.swift in Sources */,

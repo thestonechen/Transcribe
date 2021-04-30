@@ -32,14 +32,13 @@ struct HomeView: View {
                 }
             }
             .navigationBarTitle("Notes")
-            .navigationBarItems(trailing: Button(action: {
-                print("Button was tapped")
-            }) {
+            .navigationBarItems(trailing: NavigationLink(destination: NoteCreationView()) {
                 Image(systemName: "square.and.pencil")
             }
             )
             .padding()
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // Fixes constraint warnings?
     }
 }
 
