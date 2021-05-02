@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct NoteCreationView: View {
+    
+    @State var text = ""
+    
     var body: some View {
-        Text("Creating new note")
+        MultiLineTextField(text: self.$text)
+            .padding()
+            .navigationBarTitle("", displayMode: .inline)
     }
 }
 
