@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 struct Note: Identifiable {
-    var id = UUID()
+    var id: String
     var note: String
     var date: String
 }
@@ -20,7 +20,7 @@ class Notes: ObservableObject {
     
     init() {
         let db = Firestore.firestore()
-        db.collection("notes").addSnapshotListener { (snapshot, err) in
+        db.collection("notes").order(by: "date", descending: true).addSnapshotListener { (snapshot, err) in
             guard let snapshot = snapshot, err == nil else {
                 print(err!.localizedDescription)
                 self.isEmpty = true
@@ -33,23 +33,29 @@ class Notes: ObservableObject {
             }
             
             for documentChange in snapshot.documentChanges {
+                let id = documentChange.document.documentID
+                let note = documentChange.document.get("notes") as! String
+                let date = documentChange.document.get("date") as! Timestamp
                 switch documentChange.type {
                 case .added:
-                    
-                    let note = documentChange.document.get("notes") as! String
-                    
-                    let date = documentChange.document.get("date") as! Timestamp
-                    
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "MM-dd-yyyy hh:mm a"
                     let dateString = dateFormatter.string(from: date.dateValue())
                     
-                    self.data.append(Note(note: note, date: dateString))
+                    self.data.append(Note(id: id, note: note, date: dateString))
                     
                 case .modified:
-                    return
+                    for i in 0..<self.data.count {
+                        if self.data[i].id == id {
+                            self.data[i].note = note
+                        }
+                    }
                 case .removed:
-                    return
+                    for i in 0..<self.data.count {
+                        if self.data[i].id == id {
+                            self.data.remove(at: i)
+                        }
+                    }
                 }
             }
         }

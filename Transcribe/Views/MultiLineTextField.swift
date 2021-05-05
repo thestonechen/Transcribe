@@ -13,9 +13,16 @@ struct MultiLineTextField: UIViewRepresentable {
     
     func makeUIView(context: Context) -> some UIView {
         let view = UITextView()
-        view.text = "Start typing here"
+        
+        if self.text != "" {
+            view.text = self.text
+            view.textColor = .black
+        } else {
+            view.text = "Start typing here"
+            view.textColor = .gray
+        }
+       
         view.isEditable = true
-        view.textColor = .gray
         view.font = .systemFont(ofSize: 18)
         view.delegate = context.coordinator
         return view
@@ -37,8 +44,11 @@ struct MultiLineTextField: UIViewRepresentable {
         }
         
         func textViewDidBeginEditing(_ textView: UITextView) {
-            textView.text = ""
-            textView.textColor = .black
+            if self.parent.text == "" {
+                textView.text = ""
+                textView.textColor = .black
+            }
+            
         }
         
         func textViewDidChange(_ textView: UITextView) {

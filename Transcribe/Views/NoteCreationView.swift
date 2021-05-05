@@ -10,7 +10,9 @@ import Firebase
 
 struct NoteCreationView: View {
     
-    @State var text = ""
+    @Binding var text: String
+    @Binding var noteId: String
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         MultiLineTextField(text: self.$text)
@@ -18,7 +20,7 @@ struct NoteCreationView: View {
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
                 self.saveNote(text: self.text)
-                print("Save button pressed...")
+                self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Save")
             }
@@ -29,19 +31,21 @@ struct NoteCreationView: View {
     // Move this to separate class to handle DB stuff
     func saveNote(text: String) {
         let db = Firestore.firestore()
-        db.collection("notes").document().setData(["notes": text, "date": Date()]) { (err) in
-            guard err == nil else {
-                print(err!.localizedDescription)
-                return
+        
+        if self.noteId != "" {
+            db.collection("notes").document(self.noteId).updateData(["notes": self.text]) { (err) in
+                guard err == nil else {
+                    print(err!.localizedDescription)
+                    return
+                }
             }
-            
-            
+        } else {
+            db.collection("notes").document().setData(["notes": text, "date": Date()]) { (err) in
+                guard err == nil else {
+                    print(err!.localizedDescription)
+                    return
+                }
+            }
         }
-    }
-}
-
-struct NoteCreationView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoteCreationView()
     }
 }
