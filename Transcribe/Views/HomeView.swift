@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct HomeView: View {
     @ObservedObject var notes = Notes()
     @State var text = ""
     @State var noteId = ""
+    @State var remove = false
     
     var body: some View {
         NavigationView {
@@ -27,32 +29,47 @@ struct HomeView: View {
                     ScrollView(.vertical, showsIndicators: false, content: {
                         VStack {
                             ForEach(self.notes.data) { note in
-                                NavigationLink(destination: NoteCreationView(text: $text, noteId: $noteId)) {
-                                    VStack(alignment: .leading, spacing: 12) {
-                                        Text(note.note)
-                                            .lineLimit(1)
-                                            .foregroundColor(.black)
-                                        Divider()
+                                HStack {
+                                    NavigationLink(destination: NoteCreationView(text: $text, noteId: $noteId)) {
+                                        VStack(alignment: .leading, spacing: 12) {
+                                            Text(note.note)
+                                                .lineLimit(1)
+                                                .foregroundColor(.black)
+                                            Divider()
+                                        }
+                                    }
+                                    .simultaneousGesture(TapGesture().onEnded{
+                                        self.text = note.note
+                                        self.noteId = note.id
+                                    })
+                                    
+                                    if self.remove {
+                                        Button(action: {
+                                            let db = Firestore.firestore()
+                                            db.collection("notes").document(note.id).delete()
+                                        }, label: {
+                                            Image(systemName: "minus.circle.fill")
+                                                .foregroundColor(.red)
+                                        })
                                     }
                                 }
-                                .onDrag({ /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Item Provider@*/NSItemProvider()/*@END_MENU_TOKEN@*/ })
-                                .simultaneousGesture(TapGesture().onEnded{
-                                    self.text = note.note
-                                    self.noteId = note.id
-                                })
                             }
                         }
                     })
                 }
             }
             .navigationBarTitle("Notes")
-            .navigationBarItems(trailing: NavigationLink(destination: NoteCreationView(text: $text, noteId: $noteId)) {
-                Image(systemName: "square.and.pencil")
-            }.simultaneousGesture(TapGesture().onEnded{
-                self.text = ""
-                self.noteId = ""
-            })
-            )
+            .navigationBarItems(
+                leading: Button(action: {
+                    self.remove.toggle()
+                }, label: {
+                    Image(systemName: self.remove ? "xmark.circle" : "trash")
+                }), trailing: NavigationLink(destination: NoteCreationView(text: $text, noteId: $noteId)) {
+                    Image(systemName: "square.and.pencil")
+                }.simultaneousGesture(TapGesture().onEnded{
+                    self.text = ""
+                    self.noteId = ""
+                }))
             .padding()
         }
         .navigationViewStyle(StackNavigationViewStyle()) // Fixes constraint warnings?
