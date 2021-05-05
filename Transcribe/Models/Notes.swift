@@ -54,6 +54,10 @@ class Notes: ObservableObject {
                     for i in 0..<self.data.count {
                         if self.data[i].id == id {
                             self.data.remove(at: i)
+                            
+                            if self.data.isEmpty {
+                                self.data.isEmpty = true
+                            }
                             return
                         }
                     }
