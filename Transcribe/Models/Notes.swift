@@ -35,6 +35,7 @@ class Notes: ObservableObject {
             for documentChange in snapshot.documentChanges {
                 switch documentChange.type {
                 case .added:
+                    
                     let note = documentChange.document.get("notes") as! String
                     
                     let date = documentChange.document.get("date") as! Timestamp
