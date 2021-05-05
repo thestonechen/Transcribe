@@ -56,7 +56,7 @@ class Notes: ObservableObject {
                             self.data.remove(at: i)
                             
                             if self.data.isEmpty {
-                                self.data.isEmpty = true
+                                self.isEmpty = true
                             }
                             return
                         }
